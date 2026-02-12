@@ -1,0 +1,4 @@
+storage/backoffice.sqlite
+storage/logs/*.log
+storage/incoming/*.processed
+storage/incoming/*.invalid
