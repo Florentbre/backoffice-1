@@ -6,8 +6,12 @@ namespace App;
 
 final class Auth
 {
-    public function __construct(private Database $database)
+    /** @var Database */
+    private $database;
+
+    public function __construct(Database $database)
     {
+        $this->database = $database;
     }
 
     public function login(string $username, string $password): bool
@@ -36,9 +40,10 @@ final class Auth
         unset($_SESSION['user']);
     }
 
-    public function user(): ?array
+    /** @return array|null */
+    public function user()
     {
-        return $_SESSION['user'] ?? null;
+        return isset($_SESSION['user']) ? $_SESSION['user'] : null;
     }
 
     public function isLoggedIn(): bool

@@ -58,3 +58,8 @@ Puis ouvrir `http://localhost:8000`.
 3. Ouvrir le détail, changer le statut, réattribuer si besoin.
 4. Ajouter des pièces jointes.
 5. Vérifier les notifications dans `storage/logs/mails.log`.
+
+
+## Compatibilité PHP
+
+Le code applicatif a été adapté pour rester compatible avec des environnements PHP plus anciens (sans propriétés typées ni promotion de propriétés constructeur), afin d’éviter les erreurs de parsing au démarrage.

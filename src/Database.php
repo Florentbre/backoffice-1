@@ -8,7 +8,8 @@ use PDO;
 
 final class Database
 {
-    private PDO $pdo;
+    /** @var PDO */
+    private $pdo;
 
     public function __construct(string $dbPath)
     {
@@ -86,7 +87,8 @@ final class Database
 
         $statement = $this->pdo->prepare('INSERT OR IGNORE INTO users (username, password_hash, email, service, role) VALUES (:username, :password_hash, :email, :service, :role)');
 
-        foreach ($users as [$username, $password, $email, $service, $role]) {
+        foreach ($users as $userData) {
+            list($username, $password, $email, $service, $role) = $userData;
             $statement->execute([
                 ':username' => $username,
                 ':password_hash' => password_hash($password, PASSWORD_DEFAULT),
