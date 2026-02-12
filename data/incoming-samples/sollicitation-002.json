@@ -1,0 +1,8 @@
+{
+  "external_id": "SRC-2026-0002",
+  "title": "Réclamation juridique",
+  "description": "Réclamation liée à une clause contractuelle.",
+  "requester_email": "client2@example.com",
+  "priority": "moyenne",
+  "service_hint": "Juridique"
+}

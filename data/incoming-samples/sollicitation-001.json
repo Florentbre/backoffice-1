@@ -1,0 +1,8 @@
+{
+  "external_id": "SRC-2026-0001",
+  "title": "Demande de remboursement",
+  "description": "Le client demande un remboursement suite à une double facturation.",
+  "requester_email": "demandeur@example.com",
+  "priority": "haute",
+  "service_hint": "Support"
+}
