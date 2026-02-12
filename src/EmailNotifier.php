@@ -6,12 +6,8 @@ namespace App;
 
 final class EmailNotifier
 {
-    /** @var string */
-    private $logFile;
-
-    public function __construct(string $logFile)
+    public function __construct(private string $logFile)
     {
-        $this->logFile = $logFile;
     }
 
     /**

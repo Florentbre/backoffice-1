@@ -8,20 +8,15 @@ use RuntimeException;
 
 final class WorkflowEngine
 {
-    const STATUSES = ['recu', 'pris_en_compte', 'en_cours', 'terminee'];
+    public const STATUSES = ['recu', 'pris_en_compte', 'en_cours', 'terminee'];
 
     /** @var array<string, string[]> */
-    private $transitions;
-
-    public function __construct()
-    {
-        $this->transitions = [
-            'recu' => ['pris_en_compte', 'en_cours'],
-            'pris_en_compte' => ['en_cours', 'terminee'],
-            'en_cours' => ['terminee', 'pris_en_compte'],
-            'terminee' => [],
-        ];
-    }
+    private array $transitions = [
+        'recu' => ['pris_en_compte', 'en_cours'],
+        'pris_en_compte' => ['en_cours', 'terminee'],
+        'en_cours' => ['terminee', 'pris_en_compte'],
+        'terminee' => [],
+    ];
 
     /**
      * Autorise les transitions standard + ad-hoc pour la flexibilité demandée.

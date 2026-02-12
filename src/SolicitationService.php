@@ -8,33 +8,13 @@ use RuntimeException;
 
 final class SolicitationService
 {
-    /** @var Database */
-    private $database;
-
-    /** @var WorkflowEngine */
-    private $workflow;
-
-    /** @var EmailNotifier */
-    private $emailNotifier;
-
-    /** @var string */
-    private $incomingDir;
-
-    /** @var string */
-    private $attachmentsDir;
-
     public function __construct(
-        Database $database,
-        WorkflowEngine $workflow,
-        EmailNotifier $emailNotifier,
-        string $incomingDir,
-        string $attachmentsDir
+        private Database $database,
+        private WorkflowEngine $workflow,
+        private EmailNotifier $emailNotifier,
+        private string $incomingDir,
+        private string $attachmentsDir,
     ) {
-        $this->database = $database;
-        $this->workflow = $workflow;
-        $this->emailNotifier = $emailNotifier;
-        $this->incomingDir = $incomingDir;
-        $this->attachmentsDir = $attachmentsDir;
     }
 
     public function importIncomingJson(): void
@@ -84,8 +64,7 @@ final class SolicitationService
         return $stmt->fetchAll();
     }
 
-    /** @return array|null */
-    public function find(int $id)
+    public function find(int $id): ?array
     {
         $stmt = $this->database->pdo()->prepare('SELECT * FROM solicitations WHERE id = :id');
         $stmt->execute([':id' => $id]);
@@ -112,8 +91,7 @@ final class SolicitationService
         return $stmt->fetchAll();
     }
 
-    /** @param int|null $assignTo */
-    public function updateWorkflow(int $solicitationId, int $actorId, string $nextStatus, $assignTo, string $note, bool $forceAdHoc): void
+    public function updateWorkflow(int $solicitationId, int $actorId, string $nextStatus, ?int $assignTo, string $note, bool $forceAdHoc): void
     {
         $sol = $this->find($solicitationId);
         if (!$sol) {
@@ -180,8 +158,7 @@ final class SolicitationService
         return $stmt->fetchAll();
     }
 
-    /** @param int|null $assignedTo */
-    private function notifyActors(int $solicitationId, string $status, $assignedTo, string $requesterEmail): void
+    private function notifyActors(int $solicitationId, string $status, ?int $assignedTo, string $requesterEmail): void
     {
         if ($assignedTo) {
             $stmt = $this->database->pdo()->prepare('SELECT email, username FROM users WHERE id = :id');
@@ -206,8 +183,7 @@ final class SolicitationService
         }
     }
 
-    /** @return int|null */
-    private function defaultAssigneeId()
+    private function defaultAssigneeId(): ?int
     {
         $stmt = $this->database->pdo()->query("SELECT id FROM users WHERE role = 'agent' ORDER BY id LIMIT 1");
         $row = $stmt->fetch();
