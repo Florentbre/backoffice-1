@@ -1,4 +1,8 @@
-storage/backoffice.sqlite
-storage/logs/*.log
-storage/incoming/*.processed
-storage/incoming/*.invalid
+/.idea/
+/.vscode/
+/.env.local
+/var/
+/vendor/
+/storage/attachments/*
+/storage/incoming/*.processed
+/storage/incoming/*.invalid
