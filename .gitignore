@@ -1,0 +1,8 @@
+/.idea/
+/.vscode/
+/.env.local
+/var/
+/vendor/
+/storage/attachments/*
+/storage/incoming/*.processed
+/storage/incoming/*.invalid
