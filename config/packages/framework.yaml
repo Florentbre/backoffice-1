@@ -1,0 +1,21 @@
+framework:
+  secret: '%env(APP_SECRET)%'
+  csrf_protection: true
+  session: true
+  form: true
+  validation: { enable_attributes: true }
+  workflow:
+    workflows:
+      solicitation:
+        type: state_machine
+        marking_store:
+          type: method
+          property: status
+        supports:
+          - App\Entity\Solicitation
+        initial_marking: recu
+        places: [recu, pris_en_compte, en_cours, terminee]
+        transitions:
+          prendre_en_compte: { from: recu, to: pris_en_compte }
+          demarrer_traitement: { from: [recu, pris_en_compte], to: en_cours }
+          terminer: { from: [en_cours, pris_en_compte], to: terminee }

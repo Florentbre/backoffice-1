@@ -1,0 +1,17 @@
+parameters:
+  app.incoming_dir: '%kernel.project_dir%/storage/incoming'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\\:
+    resource: '../src/'
+    exclude:
+      - '../src/Entity/'
+      - '../src/Kernel.php'
+
+  App\Service\IncomingJsonImporter:
+    arguments:
+      $incomingDir: '%app.incoming_dir%'

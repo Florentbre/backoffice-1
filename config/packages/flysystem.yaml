@@ -1,0 +1,6 @@
+flysystem:
+  storages:
+    attachments.storage:
+      adapter: 'local'
+      options:
+        directory: '%kernel.project_dir%/storage/attachments'

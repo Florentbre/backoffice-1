@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Backoffice Symfony{% endblock %}</title>
+  <style>body{font-family:Arial;margin:2rem;background:#f6f8fb}.card{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem}table{width:100%;border-collapse:collapse}th,td{padding:.5rem;border-bottom:1px solid #ddd}.btn{background:#0d6efd;color:#fff;padding:.4rem .7rem;border:0;border-radius:6px;text-decoration:none}</style>
+</head>
+<body>
+{% if app.user %}<div class="card">Connecté: {{ app.user.userIdentifier }} - <a href="{{ path('app_logout') }}">Logout</a></div>{% endif %}
+{% block body %}{% endblock %}
+</body>
+</html>

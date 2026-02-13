@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="card">
+  <a href="{{ path('app_dashboard') }}">← Retour</a>
+  <h2>Dossier #{{ solicitation.id }} - {{ solicitation.title }}</h2>
+  <p>{{ solicitation.description }}</p>
+  <p>Statut: <strong>{{ solicitation.status }}</strong></p>
+</div>
+<div class="card">
+  <h3>Workflow Symfony</h3>
+  <form method="post" action="{{ path('app_solicitation_transition',{id:solicitation.id}) }}">
+    <select name="transition">
+      <option value="prendre_en_compte">prendre_en_compte</option>
+      <option value="demarrer_traitement">demarrer_traitement</option>
+      <option value="terminer">terminer</option>
+    </select>
+    <select name="assign_to"><option value="">-- Réattribuer --</option>{% for u in users %}<option value="{{ u.id }}">{{ u.username }} ({{ u.service }})</option>{% endfor %}</select>
+    <textarea name="note" placeholder="Note interne"></textarea>
+    <button class="btn" type="submit">Appliquer</button>
+  </form>
+</div>
+<div class="card">
+  <h3>GED (attachments)</h3>
+  <form method="post" enctype="multipart/form-data" action="{{ path('app_solicitation_attachment',{id:solicitation.id}) }}">
+    <input type="file" name="attachment" required>
+    <button class="btn" type="submit">Ajouter</button>
+  </form>
+  <ul>{% for a in solicitation.attachments %}<li><a target="_blank" href="{{ path('app_attachment_view',{path:a.storedPath}) }}">{{ a.originalName }}</a> ({{ a.mimeType }})</li>{% endfor %}</ul>
+</div>
+<div class="card">
+  <h3>Historique</h3>
+  <table><thead><tr><th>Date</th><th>Transition</th><th>Acteur</th><th>Note</th></tr></thead><tbody>
+  {% for h in history %}<tr><td>{{ h.createdAt|date('Y-m-d H:i') }}</td><td>{{ h.fromStatus }} → {{ h.toStatus }}</td><td>{{ h.actor ? h.actor.username : 'n/a' }}</td><td>{{ h.note }}</td></tr>{% endfor %}
+  </tbody></table>
+</div>
+{% endblock %}

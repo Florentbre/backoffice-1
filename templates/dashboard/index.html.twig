@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="card"><h1>Dashboard</h1>
+<table><thead><tr><th>ID</th><th>Titre</th><th>Statut</th><th></th></tr></thead><tbody>
+{% for s in solicitations %}
+<tr><td>#{{ s.id }}</td><td>{{ s.title }}</td><td>{{ s.status }}</td><td><a class="btn" href="{{ path('app_solicitation_show', {id:s.id}) }}">Ouvrir</a></td></tr>
+{% else %}
+<tr><td colspan="4">Aucune sollicitation</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% endblock %}
