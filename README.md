@@ -65,3 +65,18 @@ Comptes de démonstration :
 
 Dans cet environnement d’exécution, l’accès réseau à Packagist est bloqué (403), donc `composer install` ne peut pas être exécuté ici.
 Le code Symfony est livré/restructuré, mais l’installation des dépendances doit être lancée sur votre environnement CI/local avec accès internet.
+
+## Dépannage `cache:clear`
+
+Si vous voyez l'erreur :
+`Unrecognized option "with_constructor_extractor" under "framework.property_info"`,
+supprimez cette option et gardez uniquement :
+
+```yaml
+framework:
+  property_info:
+    enabled: true
+```
+
+Cette version du projet est alignée avec cette configuration.
+

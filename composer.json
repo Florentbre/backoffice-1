@@ -2,12 +2,14 @@
   "type": "project",
   "license": "proprietary",
   "require": {
-    "php": ">=8.2",
+    "doctrine/doctrine-bundle": "^2.12",
+    "doctrine/doctrine-migrations-bundle": "^3.4",
+    "doctrine/migrations": "^3.8",
+    "doctrine/orm": "^3.2",
     "ext-ctype": "*",
     "ext-iconv": "*",
-    "doctrine/doctrine-bundle": "^2.12",
-    "doctrine/orm": "^3.2",
-    "doctrine/migrations": "^3.8",
+    "league/flysystem-bundle": "^3.0",
+    "php": ">=8.2",
     "symfony/asset": "7.2.*",
     "symfony/console": "7.2.*",
     "symfony/dotenv": "7.2.*",
@@ -22,8 +24,7 @@
     "symfony/validator": "7.2.*",
     "symfony/workflow": "7.2.*",
     "symfony/yaml": "7.2.*",
-    "vich/uploader-bundle": "^2.4",
-    "league/flysystem-bundle": "^3.0"
+    "vich/uploader-bundle": "^2.4"
   },
   "autoload": {
     "psr-4": {
