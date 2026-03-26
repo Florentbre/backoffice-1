@@ -1,8 +1,6 @@
+/vendor/
+/.env.local
+/data/*.sqlite
+/data/*.sqlite-journal
 /.idea/
 /.vscode/
-/.env.local
-/var/
-/vendor/
-/storage/attachments/*
-/storage/incoming/*.processed
-/storage/incoming/*.invalid
