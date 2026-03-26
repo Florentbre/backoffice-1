@@ -1,18 +1,22 @@
 # LifeTag GPS Tracker Web App (PHP + SQLite)
 
-Application web minimaliste qui :
+Application web qui :
 
 1. Interroge un service distant toutes les 5 minutes pour récupérer la position GPS d'un traceur type LifeTag.
 2. Stocke l'historique dans SQLite.
 3. Affiche les positions sur carte (Leaflet/OpenStreetMap) avec filtre entre 2 dates.
 
-## ⚠️ À propos de Google "Localiser mon appareil"
+## Connecteur Google "Localiser mon appareil" (non officiel)
 
-Google ne fournit pas d'API publique officielle documentée pour récupérer directement la position de tous les appareils/traceurs depuis des scripts tiers.
+Tu voulais une connexion directe aux services Google : c'est pris en charge via `LOCATOR_PROVIDER=google_unofficial`.
 
-Cette application est donc construite avec un **endpoint compatible** (`LOCATOR_ENDPOINT_URL`) :
-- soit un proxy interne que vous maîtrisez,
-- soit un connecteur maison qui récupère la donnée autorisée et renvoie un JSON.
+Le connecteur `GoogleFindMyDeviceClient` envoie une requête HTTP vers Google (`GOOGLE_FMD_URL`) avec paramètres configurables :
+- méthode,
+- bearer token,
+- cookie de session,
+- body JSON.
+
+> Important : ce flux est non officiel et peut casser à tout moment si Google modifie ses endpoints ou son modèle d'authentification.
 
 ## Prérequis
 
@@ -25,12 +29,13 @@ Cette application est donc construite avec un **endpoint compatible** (`LOCATOR_
 cp .env.example .env
 ```
 
-Puis adaptez `.env`.
+Puis adapter `.env` selon ton mode :
+- `google_unofficial` (direct Google),
+- `generic` (endpoint proxy maison).
 
 ## Lancer l'application web
 
 ```bash
-set -a && source .env && set +a
 php -S 0.0.0.0:8000 -t public
 ```
 
@@ -49,23 +54,9 @@ php scripts/poll.php
 */5 * * * * cd /workspace/backoffice-1 && /usr/bin/env bash -lc 'set -a && source .env && set +a && php scripts/poll.php >> data/poller.log 2>&1'
 ```
 
-## Format JSON accepté
+## Parsing JSON
 
 Le poller cherche dans la réponse JSON les champs (même imbriqués):
 - latitude: `latitude` ou `lat`
 - longitude: `longitude`, `lng` ou `lon`
 - précision (optionnelle): `accuracy`, `horizontalAccuracy` ou `radius`
-
-Exemple :
-
-```json
-{
-  "device": {
-    "position": {
-      "lat": 48.8566,
-      "lng": 2.3522,
-      "accuracy": 12.4
-    }
-  }
-}
-```

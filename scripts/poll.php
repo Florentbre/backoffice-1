@@ -6,10 +6,18 @@ declare(strict_types=1);
 require __DIR__ . '/../src/bootstrap.php';
 require __DIR__ . '/../src/TrackerRepository.php';
 require __DIR__ . '/../src/RemoteLocatorClient.php';
+require __DIR__ . '/../src/GoogleFindMyDeviceClient.php';
 require __DIR__ . '/../src/PositionPoller.php';
 
+$provider = getenv('LOCATOR_PROVIDER') ?: 'google_unofficial';
+$client = match ($provider) {
+    'generic' => new RemoteLocatorClient(),
+    'google_unofficial' => new GoogleFindMyDeviceClient(),
+    default => throw new RuntimeException('LOCATOR_PROVIDER invalide: ' . $provider),
+};
+
 $poller = new PositionPoller(
-    new RemoteLocatorClient(),
+    $client,
     new TrackerRepository(db()),
 );
 

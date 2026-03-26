@@ -5,7 +5,7 @@ declare(strict_types=1);
 final class PositionPoller
 {
     public function __construct(
-        private RemoteLocatorClient $client,
+        private object $client,
         private TrackerRepository $repository,
     ) {
     }
